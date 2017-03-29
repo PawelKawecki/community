@@ -27,8 +27,8 @@ $factory->define(App\CommunityLink::class, function (Faker\Generator $faker) {
     return [
         'title'      => $faker->sentence,
         'link'       => $faker->url,
-        'user_id'    => factory(\App\User::class)->create()->id,
-        'channel_id' => 1,
-        'approved'   => 0,
+        'user_id'    => \App\User::all()->random()->id,
+        'channel_id' => \App\Channel::all()->random()->id,
+        'approved'   => 1,
     ];
 });

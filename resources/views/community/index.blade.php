@@ -5,18 +5,18 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8">
-                <h1>Community</h1>
+                <h3><a href="{{ url('community') }}">Community</a></h3>
 
                 <ul class="list-group">
                     @foreach($links as $link)
                         <li class="list-group-item">
-                            <span class="label label-default" style="background: {{ $link->channel->color }}">
+                            <a href="{{ url('community/' . $link->channel->title) }}" class="label label-default" style="background: {{ $link->channel->color }}">
                                 {{ $link->channel->title }}
-                            </span>
+                            </a>
 
                             &nbsp;
 
-                            <a href="{{ $link->$link }}">
+                            <a href="{{ $link->link }}" target="_blank">
                                 {{ $link->title }}
                             </a>
 
@@ -25,6 +25,8 @@
 
                     @endforeach
                 </ul>
+
+                {{ $links->links() }}
             </div>
 
            @include('community.add-link')

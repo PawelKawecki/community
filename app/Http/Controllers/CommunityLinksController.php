@@ -9,9 +9,9 @@ use Illuminate\Http\Request;
 class CommunityLinksController extends Controller
 {
 
-    public function index()
+    public function index(Channel $channel)
     {
-        $links = CommunityLink::where('approved', 1)->paginate(25);
+        $links = CommunityLink::forChannel($channel)->where('approved', 1)->paginate(5);
 
         $channels = Channel::orderBy('title', 'ASC')->get();
 

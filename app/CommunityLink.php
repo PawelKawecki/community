@@ -21,4 +21,13 @@ class CommunityLink extends Model
     {
         return $this->belongsTo(Channel::class);
     }
+
+    public function scopeForChannel($query, Channel $channel)
+    {
+        if($channel->exists) {
+            return $query->where('channel_id', $channel->id);
+        }
+
+        return $query;
+    }
 }

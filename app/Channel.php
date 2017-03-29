@@ -12,4 +12,8 @@ class Channel extends Model
         'color'
     ];
 
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }
