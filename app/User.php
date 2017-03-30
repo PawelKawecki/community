@@ -27,23 +27,44 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    /**
+     * Relation with CommunityLink
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function communityLinks()
     {
         return $this->hasMany(CommunityLink::class, 'user_id', 'id');
     }
 
-    public function contributeLink($data)
+    /**
+     * Relation with CommunityLink
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function votes()
     {
-        if($this->isTrusthed()) {
-            $data['approved'] = true;
-        }
-
-        $this->communityLinks()->create(
-            $data
-        );
+        return $this->belongsToMany(CommunityLink::class, 'community_link_votes')->withTimestamps();
     }
 
-    public function isTrusthed()
+    /**
+     * Checks if user voted for a given linl
+     *
+     * @param CommunityLink $link
+     *
+     * @return mixed
+     */
+    public function votedFor(CommunityLink $link)
+    {
+        return $link->votes->contains('user_id', $this->id);
+    }
+
+    /**
+     * Determine if user is trusted
+     *
+     * @return mixed
+     */
+    public function isTrusted()
     {
         return $this->approved;
     }

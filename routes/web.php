@@ -22,3 +22,5 @@ Route::get('/home', 'HomeController@index');
 Route::get('community', 'CommunityLinksController@index');
 Route::get('community/{channel}', 'CommunityLinksController@index');
 Route::post('community', 'CommunityLinksController@store')->middleware('auth');
+
+Route::post('votes/{link}', 'VotesController@store');
