@@ -13,7 +13,16 @@ class CommunityLinksController extends Controller
 
     public function index(Channel $channel)
     {
-        $links = CommunityLink::with('votes')->forChannel($channel)->where('approved', 1)->latest('updated_at')->paginate(10);
+        $orderBy = \request()->exists('popular') ? 'vote_count' : 'updated_at';
+
+        $links = CommunityLink::with('votes', 'creator', 'channel')
+            ->forChannel($channel)
+            ->leftJoin('community_link_votes', 'community_link_votes.community_link_id', '=', 'community_links.id')
+            ->selectRaw('community_links.*, count(community_link_votes.id) as vote_count')
+            ->where('approved', 1)
+            ->groupBy('community_links.id')
+            ->orderBy($orderBy, 'desc')
+            ->paginate(10);
 
         $channels = Channel::orderBy('title', 'ASC')->get();
 

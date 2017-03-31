@@ -1,3 +1,7 @@
+<ul class="nav nav-tabs">
+    <li class="{{ request()->has('popular') ? '' : 'active'}}"><a href="{{ request()->url() }}">Most recent</a></li>
+    <li class="{{ request()->has('popular') ? 'active' : ''}}"><a href="{{ request()->url() . '?popular=1' }}">Most popular</a></li>
+</ul>
 <ul class="list-group">
     @foreach($links as $link)
         <li class="list-group-item">
@@ -27,4 +31,4 @@
     @endforeach
 </ul>
 
-{{ $links->links() }}
+{{ $links->appends(request()->query())->links() }}

@@ -1,0 +1,4 @@
+ul.list-group li.list-group-item form {
+    display: inline-block;
+    margin-right: 1em;
+}
